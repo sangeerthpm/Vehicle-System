@@ -1,0 +1,175 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Vehicle Details</title>
+
+    <link rel="stylesheet"
+          href="{% static 'vehicles/css/style.css' %}">
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+            🚗 Car Rental
+        </div>
+
+        <a href="/" class="nav-home">
+            Home
+        </a>
+
+    </nav>
+
+
+    <section class="detail-section">
+
+        <div
+            id="vehicle-detail"
+            class="vehicle-detail"
+        >
+
+            <p>Loading...</p>
+
+        </div>
+
+    </section>
+
+
+    <script>
+
+        const vehicleId = Number("{{ vehicle_id }}");
+
+        console.log("Vehicle ID:", vehicleId);
+
+
+        async function loadVehicle() {
+
+            try {
+
+                const response = await fetch(
+                    `/api/vehicles/${vehicleId}/`
+                );
+
+                if (!response.ok) {
+                    throw new Error("Vehicle not found");
+                }
+
+                const vehicle = await response.json();
+
+                const container =
+                    document.getElementById(
+                        "vehicle-detail"
+                    );
+
+
+                container.innerHTML = `
+
+                    <div class="detail-card">
+
+                        <div class="car-icon">
+                            🚗
+                        </div>
+
+                        <h1>
+                            ${vehicle.brand}
+                            ${vehicle.name}
+                        </h1>
+
+                        <div class="details">
+
+                            <p>
+                                <strong>Brand:</strong>
+                                ${vehicle.brand}
+                            </p>
+
+                            <p>
+                                <strong>Year:</strong>
+                                ${vehicle.year}
+                            </p>
+
+                            <p>
+                                <strong>Fuel:</strong>
+                                ${vehicle.fuel_type}
+                            </p>
+
+                            <p>
+                                <strong>Price:</strong>
+                                ₹${vehicle.price_per_day}
+                                / day
+                            </p>
+
+                            <p>
+                                <strong>Status:</strong>
+                                ${
+                                    vehicle.is_available
+                                    ? "Available"
+                                    : "Unavailable"
+                                }
+                            </p>
+
+                        </div>
+
+
+                        ${
+                            vehicle.is_available
+                            ?
+                            `
+                            <a
+                                href="/vehicle/${vehicle.id}/book/"
+                                class="book-button"
+                            >
+                                Book Now
+                            </a>
+                            `
+                            :
+                            `
+                            <button
+                                class="disabled-button"
+                                disabled
+                            >
+                                Currently Unavailable
+                            </button>
+                            `
+                        }
+
+                    </div>
+
+                `;
+
+            }
+
+            catch (error) {
+
+                document.getElementById(
+                    "vehicle-detail"
+                ).innerHTML = `
+
+                    <div class="error">
+                        Vehicle not found.
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+        loadVehicle();
+
+    </script>
+
+</body>
+
+</html>
