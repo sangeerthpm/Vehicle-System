@@ -209,5 +209,4 @@ def vehicle_detail_page(request, vehicle_id):
 
 
 def booking_page(request, vehicle_id):
-    return render(request,'vehicles/booking.html',{'vehicle_id': vehicle_id}
-    )
+    return render(request,'vehicles/booking.html',{'vehicle_id': vehicle_id})
