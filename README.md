@@ -1,10 +1,11 @@
 # Vehicle-System
 
-Setup Steps
+### Setup Steps
+
 1. Create the Project Folder
 Create a dedicated folder for the project.
 
-2. Create a Virtual Environment
+3. Create a Virtual Environment
 Create a Python virtual environment inside the project folder:
 
 python -m venv venv
@@ -38,21 +39,24 @@ Define the required database models in models.py using Django's model system.
 
 The models contain the fields and relationships required for the project.
 
-Installation Guide
+### Installation Guide
+
 1. Activate the Virtual Environment
 Before installing the project dependencies, activate the virtual environment.
 
 Windows:
 
 venv\Scripts\activate
+
 2. Install Django
-Install Django inside the activated virtual environment:
+3. Install Django inside the activated virtual environment:
 
 pip install django
+
 This installs Django only for this project environment.
 
 3. Install python-dotenv
-The project uses a .env file to store configuration values such as secret keys and other environment-specific settings.
+4. The project uses a .env file to store configuration values such as secret keys and other environment-specific settings.
 
 Install the python-dotenv package:
 
@@ -81,9 +85,9 @@ python manage.py makemigrations
 This command detects changes made to the Django models and creates migration files describing those changes.
 
 2. Apply Migrations
-Run:
+   
+Run:python manage.py migrate
 
-python manage.py migrate
 This command applies the migration files to the database and creates or updates the required database tables.
 
 Migration Workflow
@@ -92,17 +96,21 @@ Whenever you make changes to your models, use:
 python manage.py makemigrations
 python manage.py migrate
 How to Run the Project
+
 1. Activate the Virtual Environment
 Make sure the virtual environment is activated:
 
 venv\Scripts\activate
+
 2. Start the Django Development Server
 Run the following command:
 
 python manage.py runserver
+
 After running the command, Django will display a local development URL in the terminal, for example:
 
 http://127.0.0.1:8000/
+
 3. Open the Application
 Copy the URL displayed in the terminal and open it in your web browser, such as Google Chrome.
 
@@ -111,11 +119,15 @@ The Django application will then be available in the browser.
 Note: The URL or port may be different if Django is configured to use another port.
 
 How to Test APIs
+
 The project's APIs can be tested using either Postman or the Django REST Framework Browsable API.
 
 Option 1: Test APIs Using Postman
+
 Start the Django development server:
+
 python manage.py runserver
+
 Open Postman.
 
 Enter the API endpoint URL.
@@ -135,20 +147,20 @@ Option 2: Test Using Django REST Framework
 If Django REST Framework is configured in the project, open the API endpoint URL directly in the browser.
 
 The Django REST Framework Browsable API provides an interface where you can:
-
+```
 View API responses
 Send GET requests
 Submit POST requests
 Enter JSON or form data
 Test API endpoints directly from the browser
 Example:
-
+```
 http://127.0.0.1:8000/api/
 The exact URL depends on the API routes configured in the project.
 
 🔗 API Endpoint List
 The following API endpoints are available in the project:
-
+```
 Method	URL	Purpose
 GET	/api/vehicles/	List all vehicles
 POST	/api/vehicles/	Add a new vehicle
@@ -159,7 +171,7 @@ GET	/api/bookings/	List all bookings
 POST	/api/bookings/	Create a new booking
 GET	/api/bookings/1/	Get details of a specific booking
 Note: Replace 1 with the actual vehicle or booking ID when requesting a specific record.
-
+```
 Example
 To get details of vehicle with ID 5:
 
@@ -170,7 +182,7 @@ GET /api/bookings/3/
 📦 Sample JSON
 Vehicle Response
 Example response from the vehicles API:
-
+```
 [
     {
         "id": 1,
@@ -182,6 +194,7 @@ Example response from the vehicles API:
         "is_available": true
     }
 ]
+```
 The vehicle has a daily rental price of ₹2,500.00 and is currently available for booking.
 
 Booking Request
@@ -190,6 +203,7 @@ To create a booking, send a POST request to:
 /api/bookings/
 Example booking JSON:
 
+```
  {
         "id": 4,
         "customer_name": "sangeerth",
@@ -199,6 +213,7 @@ Example booking JSON:
         "total_amount": "3000.00",
         "vehicle": 5
     },
+```
 Here, "vehicle": 1 refers to the vehicle with ID 1.
 
 The start_date and end_date specify the booking period, which can be used to calculate the total rental amount based on the vehicle's price_per_day.
